@@ -10,7 +10,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Link, Outlet } from "react-router-dom";
-import { ConnectKitButton } from "connectkit";
+
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "@/theme/theme-provider";
 
@@ -133,7 +133,7 @@ export const RootLayout = () => {
                 <CircleUser className="h-5 w-5" />
                 <span className="sr-only">Toggle user menu</span>
               </Button> */}
-              <ConnectKitButton />
+             
             </DropdownMenuTrigger>
           </DropdownMenu>
         </div>

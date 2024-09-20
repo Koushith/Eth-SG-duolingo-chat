@@ -1,8 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import { RootLayout } from "./layouts";
-import { HomeScreen } from "./pages/Home/Home";
-import { SchemaDetailScreen } from "./pages/SchemaDetails/schema-details.screen";
-import { AttestationDetails } from "./pages/attestation-details/attestation-details.screen";
+import { AuthScreen, ChatScreen, ChatListScreen, OnboardingScreen, PreferenceScreen } from "./screens";
+
 
 export const routerConfig = createBrowserRouter([
   {
@@ -11,17 +10,28 @@ export const routerConfig = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <HomeScreen />,
-        errorElement: <h1>404 Not Found</h1>,
+        element: <AuthScreen />,
+        errorElement: <div>Error loading auth screen</div>,
       },
       {
-        path: "/schema/view/:schemaId",
-        element: <SchemaDetailScreen />,
-        errorElement: <h1>404 Not Found</h1>,
+        path: "/chat",
+        element: <ChatScreen />,
+        errorElement: <div>Error loading chat screen</div>,
       },
       {
-        path: "/attestation/view/:attestationId",
-        element: <AttestationDetails />,
+        path: "/chat-list",
+        element: <ChatListScreen />,
+        errorElement: <div>Error loading chat list screen</div>,
+      },
+      {
+        path: "/onboarding",
+        element: <OnboardingScreen />,
+        errorElement: <div>Error loading onboarding screen</div>,
+      },
+      {
+        path: "/preference",
+        element: <PreferenceScreen />,
+        errorElement: <div>Error loading preference screen</div>,
       },
     ],
   },
