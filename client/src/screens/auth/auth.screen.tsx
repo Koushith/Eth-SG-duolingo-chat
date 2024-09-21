@@ -24,6 +24,7 @@ export function AuthScreen() {
     const [achievements, setAchievements] = useState([])
     const { toast } = useToast()
     const { setUser} = useUser()
+
     const getVerificationReq = async () => {
         try {
             setIsLoading(true)
@@ -130,11 +131,12 @@ export function AuthScreen() {
                                     {isLoading ? (
                                         <>
                                             <img src={DuoBird} alt="Duolingo Bird" className="w-24 h-24 animate-bounce" />
-                                            <p className="mt-4 text-center text-lg">Loading your verification...</p>
+                                            <p className="mt-4 text-center text-lg">Loading Reclaim Verification Link...</p>
                                         </>
                                     ) : requestUrl ? (
                                         <>
                                             <QRCode value={requestUrl as string} size={200} />
+                                            <Loader2 className="w-4 h-4 animate-spin" />
                                             <p className="text-center text-md mt-4">Scan this QR code with your mobile device to verify your Duolingo account</p>
                                             {isVerifying && (
                                                 <div className="mt-4 flex flex-col items-center">
@@ -142,6 +144,10 @@ export function AuthScreen() {
                                                     <p className="mt-2 text-center text-sm">Verifying your Duolingo account...</p>
                                                 </div>
                                             )}
+
+                                            <Button onClick={()=>{
+                                               window.open(requestUrl, '_blank');
+                                            }}>Open on Mobile</Button>
                                         </>
                                     ) : null}
                                 </>
@@ -178,9 +184,9 @@ export function AuthScreen() {
                     Powered by Reclaim
                 </CardFooter>
 
-                <Button onClick={()=>{
+                {/* <Button onClick={()=>{
                     navigate("/chat-list")
-                }}>Skip for now</Button>
+                }}>Skip for now</Button> */}
             </Card>
         </div>
     )

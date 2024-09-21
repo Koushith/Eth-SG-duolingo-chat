@@ -5,6 +5,10 @@ export const UserContext = createContext<any | null>(null);
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
     const [user, setUser] = useState<any>(null);
+
+
+   
+
     return (
         <UserContext.Provider value={{ user, setUser }}>
             {children}

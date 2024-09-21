@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import { RootLayout } from "./layouts";
-import { AuthScreen, ChatScreen, ChatListScreen, OnboardingScreen, PreferenceScreen } from "./screens";
+import { AuthScreen, ChatScreen, ChatListScreen, OnboardingScreen, PreferenceScreen, SettingsScreen, ProfileScreen } from "./screens";
 
 
 export const routerConfig = createBrowserRouter([
@@ -14,7 +14,7 @@ export const routerConfig = createBrowserRouter([
         errorElement: <div>Error loading auth screen</div>,
       },
       {
-        path: "/chat",
+        path: "/chat/:userId",
         element: <ChatScreen />,
         errorElement: <div>Error loading chat screen</div>,
       },
@@ -33,6 +33,16 @@ export const routerConfig = createBrowserRouter([
         element: <PreferenceScreen />,
         errorElement: <div>Error loading preference screen</div>,
       },
+      {
+        path: "/settings",
+        element: <SettingsScreen />,
+        errorElement: <div>Error loading settings screen</div>,
+      },
+      {
+        path: "/profile",
+        element: <ProfileScreen />,
+        errorElement: <div>Error loading profile screen</div>,
+      }
     ],
   },
 ]);

@@ -7,16 +7,20 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Navigate, Outlet, useNavigate } from "react-router-dom";
 
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "@/theme/theme-provider";
 import { Toaster } from "@/components/ui/toaster";
+import { Avatar, AvatarFallback } from "@radix-ui/react-avatar";
+import { useUser } from "@/context/user.context";
 
 export const RootLayout = () => {
   const { setTheme } = useTheme();
+  const { user } = useUser()
+  const navigate = useNavigate()
+  console.log("user from context", user)
   return (
     <div className="flex min-h-screen w-full flex-col">
       <header className="container sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
@@ -36,22 +40,17 @@ export const RootLayout = () => {
           </Link>
           <Link
             className="text-muted-foreground transition-colors hover:text-foreground"
-            to={""}
-          >
-            About
-          </Link>
-          <Link
-            className="text-muted-foreground transition-colors hover:text-foreground"
-            to={""}
-          >
-            Developers
-          </Link>
-          <Link
-            className="text-muted-foreground transition-colors hover:text-foreground"
-            to={""}
+            to={"/profile"}
           >
             Profile
           </Link>
+          <Link
+            className="text-muted-foreground transition-colors hover:text-foreground"
+            to={"/settings"}
+          >
+            Settings
+          </Link>
+          
         </nav>
         <Sheet>
           <SheetTrigger asChild>
@@ -99,15 +98,28 @@ export const RootLayout = () => {
         </Sheet>
         <div className="flex w-full items-center gap-4 md:ml-auto md:gap-2 lg:gap-4">
           <form className="ml-auto flex-1 sm:flex-initial">
-            <div className="relative">
-              <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-              <Input
-                type="search"
-                placeholder="Attestations, Schema, UID ..."
-                className="pl-8 sm:w-[300px] md:w-[200px] lg:w-[300px]"
-              />
+            <div className="relative hidden">
+              <Button
+                variant="outline"
+                size="icon"
+                className="absolute right-0 top-0 h-10 w-10 shrink-0 rounded-l-none"
+              >
+                <Search className="h-4 w-4" />
+                <span className="sr-only">Search</span>
+              </Button>
             </div>
           </form>
+          {user ? (
+            <Avatar className="h-8 w-8">
+              <AvatarFallback>
+                {user.name ? user.name.charAt(0).toUpperCase() : 'U'}
+              </AvatarFallback>
+            </Avatar>
+          ) : (
+            <Button variant="outline" onClick={() => navigate('/auth')}>
+              Sign In
+            </Button>
+          )}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" size="icon">

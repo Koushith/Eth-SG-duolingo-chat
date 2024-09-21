@@ -53,7 +53,7 @@ export const PreferenceScreen = () => {
       console.log("preferences----", preferences);
       const { data } = await axios.post(`${BACKEND_URL}/api/user/update`, { 
         preferences: preferences, 
-        email: user?.email ?? 'koushith97@gmail.com'  //TODO: change this to the user's email
+        email: user?.email   //TODO: change this to the user's email
       });
       console.log("data", data);
       if (data.success) {
@@ -63,6 +63,7 @@ export const PreferenceScreen = () => {
         });
 
         console.log("what is inside data", data);
+        localStorage.setItem("userPreferences", JSON.stringify(data.user));
         setUser(data.user);
         navigate('/chat-list');
       } else {
