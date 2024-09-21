@@ -1,20 +1,15 @@
-import { ReactNode, useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
+import { ReactNode } from "react"
+import { Dialog, DialogContent } from "@/components/ui/dialog"
 
 interface ReclaimModalProps {
-  buttonText: string
   children: ReactNode
+  isOpen: boolean
+  onOpenChange: (open: boolean) => void
 }
 
-export function ReclaimModal({ buttonText, children }: ReclaimModalProps) {
-  const [isOpen, setIsOpen] = useState(false)
-
+export function ReclaimModal({ children, isOpen, onOpenChange }: ReclaimModalProps) {
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger asChild>
-        <Button className="w-full">{buttonText}</Button>
-      </DialogTrigger>
+    <Dialog open={isOpen} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-md">
         {children}
       </DialogContent>
