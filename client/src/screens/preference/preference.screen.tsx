@@ -5,6 +5,9 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import axios from 'axios';
 import { BACKEND_URL } from '@/utils/constants';
+import { useUser } from '@/context/user.context';
+import { useToast } from '@/hooks/use-toast';
+import { useNavigate } from 'react-router-dom';
 
 interface Preference {
   name: string;
@@ -13,6 +16,10 @@ interface Preference {
 
 export const PreferenceScreen = () => {
   const [preferences, setPreferences] = useState<Preference[]>([]);
+  const [isSaving, setIsSaving] = useState(false);
+  const { user } = useUser();
+  const { toast } = useToast();
+  const navigate = useNavigate();
 
   const getAchievementNames = async () => {
     try {
@@ -41,13 +48,34 @@ export const PreferenceScreen = () => {
   };
 
   const savePreferences = async () => {
+    setIsSaving(true);
     try {
-        console.log("preferences", preferences)
-      await axios.post(`${BACKEND_URL}/api/user/update`, { preferences, email: "koushith97@gmail.com" });
-      alert('Preferences saved successfully!');
+      console.log("preferences", preferences);
+      const { data } = await axios.post(`${BACKEND_URL}/api/user/update`, { preferences, email: user?.email });
+      console.log("data", data);
+      if (data.success) {
+        toast({
+          title: "Success",
+          description: "Preferences saved successfully!",
+        });
+        navigate('/chat-list');
+      } else {
+        toast({
+          title: "Error",
+          description: "Failed to save preferences. Please try again.",
+          variant: "destructive",
+        });
+      }
     } catch (error) {
       console.error('Error saving preferences:', error);
-      alert('Failed to save preferences. Please try again.');
+        toast({
+        title: "Error",
+        description: "Failed to save preferences. Please try again.",
+        variant: "destructive",
+        
+      });
+    } finally {
+      setIsSaving(false);
     }
   };
 
@@ -101,7 +129,11 @@ export const PreferenceScreen = () => {
               disabled
               className="w-40 bg-gray-100"
             />
-            <Button onClick={savePreferences}>💾 Save Preferences</Button>
+            <Button onClick={savePreferences} disabled={isSaving}>
+              {isSaving ? 'Saving...' : '💾 Save Preferences'}
+            </Button>
+
+            <Button onClick={() => navigate('/chat')}>skip</Button>
           </div>
         </CardContent>
       </Card>

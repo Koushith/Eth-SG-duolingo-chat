@@ -67,8 +67,12 @@ const videoCallSchema = new mongoose.Schema({
   }
 });
 
+const preferenceSchema = new mongoose.Schema({
+  // Dynamic preferences
+}, { strict: false });
+
 const userSchema = new mongoose.Schema({
-  name: {
+  userName: {
     type: String,
     required: true
   },
@@ -81,7 +85,8 @@ const userSchema = new mongoose.Schema({
   achievements: [achievementSchema],
   reclaimProofChangelog: [reclaimProofChangelogSchema],
   chatHistory: [chatMessageSchema],
-  videoCalls: [videoCallSchema]
+  videoCalls: [videoCallSchema],
+  preferences: preferenceSchema
 });
 
 const User = mongoose.model('User', userSchema);

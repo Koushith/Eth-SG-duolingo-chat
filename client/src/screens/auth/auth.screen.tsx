@@ -10,6 +10,7 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { useToast } from "@/hooks/use-toast"
 import { createUser } from "./auth.service"
+import { useUser } from "@/context/user.context"
 
 export function AuthScreen() {
     const navigate = useNavigate()
@@ -22,7 +23,7 @@ export function AuthScreen() {
     const [userEmail, setUserEmail] = useState("")
     const [achievements, setAchievements] = useState([])
     const { toast } = useToast()
-
+    const { setUser} = useUser()
     const getVerificationReq = async () => {
         try {
             setIsLoading(true)
@@ -98,8 +99,9 @@ export function AuthScreen() {
         console.log("Saving user:", userName)
         // You might want to call an API or dispatch an action here
         if(achievements.length > 0){
-            const user = await createUser(userName, userEmail, achievements)
-            console.log("user", user)
+            const {user} = await createUser(userName, userEmail, achievements)
+            console.log("user rrrr", user)
+            setUser(user)
             if(user){
                 toast({
                     title: "User Saved",

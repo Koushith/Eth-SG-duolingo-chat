@@ -13,6 +13,7 @@ import { Link, Outlet } from "react-router-dom";
 
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "@/theme/theme-provider";
+import { Toaster } from "@/components/ui/toaster";
 
 export const RootLayout = () => {
   const { setTheme } = useTheme();
@@ -140,6 +141,7 @@ export const RootLayout = () => {
       </header>
       <main className="container flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
         <Outlet />
+        <Toaster />
       </main>
     </div>
   );

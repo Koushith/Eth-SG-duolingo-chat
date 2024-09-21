@@ -4,16 +4,17 @@ import { App } from "./App.tsx";
 
 import "./index.css";
 
-import { ThemeProvider } from "./theme/theme-provider.tsx";
-import { Analytics } from "@vercel/analytics/react";
+import { UserProvider } from "./context/user.context.tsx";
 
 
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-   
+   <UserProvider>
+
           <App />
-          <Analytics />
+   </UserProvider>
+         
         
   </React.StrictMode>
 );
