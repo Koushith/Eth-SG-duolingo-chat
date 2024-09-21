@@ -138,7 +138,7 @@ export function AuthScreen() {
                                             <p className="text-center text-md mt-4">Scan this QR code with your mobile device to verify your Duolingo account</p>
                                             {isVerifying && (
                                                 <div className="mt-4 flex flex-col items-center">
-                                                    <Loader2 className="w-8 h-8 animate-spin" />
+                                                    <Loader2 className="w-4 h-4 animate-spin" />
                                                     <p className="mt-2 text-center text-sm">Verifying your Duolingo account...</p>
                                                 </div>
                                             )}
@@ -179,7 +179,7 @@ export function AuthScreen() {
                 </CardFooter>
 
                 <Button onClick={()=>{
-                    navigate("/preference")
+                    navigate("/chat-list")
                 }}>Skip for now</Button>
             </Card>
         </div>

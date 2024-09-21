@@ -17,7 +17,7 @@ interface Preference {
 export const PreferenceScreen = () => {
   const [preferences, setPreferences] = useState<Preference[]>([]);
   const [isSaving, setIsSaving] = useState(false);
-  const { user } = useUser();
+  const { user , setUser} = useUser();
   const { toast } = useToast();
   const navigate = useNavigate();
 
@@ -50,14 +50,20 @@ export const PreferenceScreen = () => {
   const savePreferences = async () => {
     setIsSaving(true);
     try {
-      console.log("preferences", preferences);
-      const { data } = await axios.post(`${BACKEND_URL}/api/user/update`, { preferences, email: user?.email });
+      console.log("preferences----", preferences);
+      const { data } = await axios.post(`${BACKEND_URL}/api/user/update`, { 
+        preferences: preferences, 
+        email: user?.email ?? 'koushith97@gmail.com'  //TODO: change this to the user's email
+      });
       console.log("data", data);
       if (data.success) {
         toast({
           title: "Success",
           description: "Preferences saved successfully!",
         });
+
+        console.log("what is inside data", data);
+        setUser(data.user);
         navigate('/chat-list');
       } else {
         toast({
@@ -68,11 +74,10 @@ export const PreferenceScreen = () => {
       }
     } catch (error) {
       console.error('Error saving preferences:', error);
-        toast({
+      toast({
         title: "Error",
         description: "Failed to save preferences. Please try again.",
         variant: "destructive",
-        
       });
     } finally {
       setIsSaving(false);

@@ -86,7 +86,7 @@ const userSchema = new mongoose.Schema({
   reclaimProofChangelog: [reclaimProofChangelogSchema],
   chatHistory: [chatMessageSchema],
   videoCalls: [videoCallSchema],
-  preferences: preferenceSchema
+  preferences: [preferenceSchema]
 });
 
 const User = mongoose.model('User', userSchema);

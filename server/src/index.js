@@ -2,7 +2,9 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import { connectDB } from "./utils/connectDB.js";
-import { createUser, getAchievementNames, updateUser } from "./controllers/user.controller.js";
+import { createUser, getAchievementNames, getUsersBasedOnPreferences, updateUser } from "./controllers/user.controller.js";
+import { users } from "./seed.js";
+import User from "./model/user.js";
 
 const app = express();
 connectDB();
@@ -25,6 +27,12 @@ app.get("/", (req, res) => {
 app.post("/api/user", createUser);
 app.get("/api/user/achievement-names", getAchievementNames);
 app.post("/api/user/update", updateUser);
+app.post("/api/user/get-users", getUsersBasedOnPreferences);
+
+// app.get('/seed', async (req, res) => {
+//   const data = await User.insertMany(users);
+//   res.send(data);
+// });
 
 
 app.listen(PORT, () => {
